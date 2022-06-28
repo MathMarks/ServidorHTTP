@@ -31,13 +31,16 @@ struct Servidor construtor_servidor(int domain, int servico, int protocolo, u_lo
 
     // responsável por unir o socket à rede
     // Retorna um valor negativo indicando que não foi capaz de realizar o bind
+    
     if (bind(servidor.socket, (struct sockaddr *)&servidor.endereco, sizeof(servidor.endereco)) < 0)
     {
 
+        
         perror("Erro ao conectar ao socket....\n");
         exit(1);
     }
 
+    printf("\nlisten\n");
     // Servidor entra em listening, aguardando uma requisição do cliente
     if (listen(servidor.socket, servidor.backlog) < 0)
     {
@@ -45,8 +48,9 @@ struct Servidor construtor_servidor(int domain, int servico, int protocolo, u_lo
         perror("Falha ao começar a escutar...");
         exit(1);
     }
-
+    printf("\nSaiu Listen\n");
     servidor.iniciar = iniciar;
 
+    return servidor;
     // Cria o "objeto" servidor e retorna para quem  o instanciou, criando o socket, ligando esse socket ao endereço( binding ), e começará a escutar e procurará por erros.
 }
