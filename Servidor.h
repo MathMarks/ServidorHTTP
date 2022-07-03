@@ -1,3 +1,6 @@
+//Estruturação da struct Servidor 
+//Estruturação da função contrutor_servidor
+
 
 #ifndef Servidor_h
 #define Servidor_h

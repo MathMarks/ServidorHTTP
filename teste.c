@@ -1,5 +1,3 @@
-
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -7,23 +5,30 @@
 #include "Servidor.h"
 
 
+#define PORT_NUMBER 80 //Porta utilizada
+#define BUFFER_SIZE 4000 //Tamanho do buffer
 
 void iniciar(struct Servidor *servidor)
 {
 
-    printf("Esperando uma Conexão");
-    char buffer[40000];
+    //Ao chamar essa função, o servidor já está instanciado e pronto para receber a conexão.
+    printf("\nRealizando conexão na porta %i", servidor->porta);
+
+
+    char buffer[BUFFER_SIZE];
     int tamanho_endereco = sizeof(servidor->endereco);
     int novo_socket;
-    char *teste = "HTTP/1.0 200 OK\nDate: mon, 27 Jul 2009 12:28:53 GMT\nServer: Apache/2.2.14 (Win32)\nLast-Modified: Wed, 22 Jul 2009 19:15:56 GMT\nContent-Length: 88\nContent-Type: text/html\nConnection: Closed\n\n<html><body><h1>ALELUIA</h1></body></html>";
+    char *teste = "HTTP/1.0 200 OK\nDate: mon, 27 Jul 2009 12:28:53 GMT\nServer: Apache/2.2.14 (Win32)\nLast-Modified: Wed, 22 Jul 2009 19:15:56 GMT\nContent-Length: 88\nContent-Type: text/html\nConnection: Closed\n\n<html><body><h1>ALELUIA<img src=\"index.jpg\"></h1></body></html>";
     while (1)
     {
 
         
-        
+        // Loop infinito, que estará aceitando novas conexões utilizando a accept
         novo_socket = accept(servidor->socket, (struct sockaddr *)&servidor->endereco, (socklen_t *)&tamanho_endereco);
-        read(novo_socket, buffer, 40000);
+        read(novo_socket, buffer, BUFFER_SIZE);
+        printf("\nreponse navegador\n");
         printf("%s\n", buffer);
+        printf("\nend response navegador\n");
         write(novo_socket, teste, strlen(teste));
         close(novo_socket);
       
@@ -32,9 +37,17 @@ void iniciar(struct Servidor *servidor)
 
 int main()
 {
-    
+
     //Com isso temos uma estrutura de servidor funcionando, agora iniciar a parsing de mensagens.
-    struct Servidor servidor = construtor_servidor(AF_INET, SOCK_STREAM, 0, INADDR_ANY, 80, 10, iniciar);
+
+    //AF_INET - Comunicação ipv4 (AF - Address Family, INET - Internet)
+    //SOCK_STREAM - tipo de comunicação
+    //SOCK_STREAM, teremos um fluxo de bytes ao invés de ter pacotes(datagrams) separados de dados 
+    //0 - Protocolo TCP
+    //80 - Porta 80
+    //10 Backlog
+    //iniciar - função inicar teste 
+    struct Servidor servidor = construtor_servidor(AF_INET, SOCK_STREAM, 0, INADDR_ANY, PORT_NUMBER, 10, iniciar);
   
     servidor.iniciar(&servidor);
     
