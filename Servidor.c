@@ -21,7 +21,7 @@ struct Servidor construtor_servidor(int domain, int servico, int protocolo, u_lo
     servidor.endereco.sin_family = domain;
     //htons - "Host to network, short" - 
     servidor.endereco.sin_port = htons(porta); // Responsável por converter a porta de int para byte
-    servidor.endereco.sin_addr.s_addr = htonl(interface);
+    servidor.endereco.sin_addr.s_addr = htonl(interface);//Endereço do cliente
 
     servidor.socket = socket(domain, servico, protocolo);
     //printf("222");

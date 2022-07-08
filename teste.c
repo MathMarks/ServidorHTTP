@@ -3,9 +3,10 @@
 #include <unistd.h>
 #include <string.h>
 #include "Servidor.h"
+#include "HTTPRequest.h"
 
 
-#define PORT_NUMBER 80 //Porta utilizada
+#define PORT_NUMBER 8080 //Porta utilizada
 #define BUFFER_SIZE 4000 //Tamanho do buffer
 
 void iniciar(struct Servidor *servidor)
@@ -26,6 +27,7 @@ void iniciar(struct Servidor *servidor)
         // Loop infinito, que estará aceitando novas conexões utilizando a accept
         novo_socket = accept(servidor->socket, (struct sockaddr *)&servidor->endereco, (socklen_t *)&tamanho_endereco);
         read(novo_socket, buffer, BUFFER_SIZE);
+        request_handler(buffer,novo_socket);
         printf("\nreponse navegador\n");
         printf("%s\n", buffer);
         printf("\nend response navegador\n");
@@ -44,7 +46,8 @@ int main()
     //SOCK_STREAM - tipo de comunicação
     //SOCK_STREAM, teremos um fluxo de bytes ao invés de ter pacotes(datagrams) separados de dados 
     //0 - Protocolo TCP
-    //80 - Porta 80
+    //INADDR_ANY - Esse parâmetro especifica que estamos escutando por qualquer tipo de endereço ip
+    //PORT_NUMBER - Porta escolhida
     //10 Backlog
     //iniciar - função inicar teste 
     struct Servidor servidor = construtor_servidor(AF_INET, SOCK_STREAM, 0, INADDR_ANY, PORT_NUMBER, 10, iniciar);
