@@ -5,12 +5,7 @@
 #include "Servidor.h"
 #include "HTTPRequest.h"
 
-
-#define PORT_NUMBER 8080 //Porta utilizada
-#define BUFFER_SIZE 4000 //Tamanho do buffer
-
-void iniciar(struct Servidor *servidor)
-{
+void iniciar(struct Servidor *servidor){
 
     //Ao chamar essa função, o servidor já está instanciado e pronto para receber a conexão.
     printf("\nRealizando conexão na porta %i", servidor->porta);
@@ -23,22 +18,23 @@ void iniciar(struct Servidor *servidor)
     while (1)
     {
 
-        
+        printf("_________________________________________________________________");
         // Loop infinito, que estará aceitando novas conexões utilizando a accept
         novo_socket = accept(servidor->socket, (struct sockaddr *)&servidor->endereco, (socklen_t *)&tamanho_endereco);
         read(novo_socket, buffer, BUFFER_SIZE);
         request_handler(buffer,novo_socket);
-        printf("\nreponse navegador\n");
-        printf("%s\n", buffer);
-        printf("\nend response navegador\n");
-        write(novo_socket, teste, strlen(teste));
-        close(novo_socket);
+        //printf("\nreponse navegador\n");
+        //printf("%s\n", buffer);
+        //printf("\nend response navegador\n");
+        //write(novo_socket, teste, strlen(teste));
+        //close(novo_socket);
+        printf("_________________________________________________________________");
+
       
     }
 }
 
-int main()
-{
+int main() {
 
     //Com isso temos uma estrutura de servidor funcionando, agora iniciar a parsing de mensagens.
 
