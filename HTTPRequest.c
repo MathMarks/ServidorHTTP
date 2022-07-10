@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <sys/socket.h>
+#include <pthread.h>  
 #include <netinet/in.h>
 #include <fcntl.h>
 #include "Servidor.h"
@@ -49,13 +50,16 @@ int request_handler(char * request, int socket){
 
       buscador_arquivos(infos_da_requisicao[1], socket);
 
-    } else if (strcmp(infos_da_requisicao[1],"index.jpg")){
+    } else if (strcmp(infos_da_requisicao[1],"index.jpeg")){
       
       printf("\nDevolvendo Imagem\n");
 
       buscador_arquivos(infos_da_requisicao[1], socket);
 
     }
+
+   printf("\n--Saiu Request Handler--\n");
+    
 
 }
 
@@ -70,8 +74,8 @@ void buscador_arquivos(char *nome_comp_do_arq, int socket){
    char *caminho_total = (char * ) malloc((strlen(PATH) + strlen(nome_comp_do_arq)) * sizeof(char));
    char *tokens[2];
    long bytes_no_arquivo = 0;//para arquivo html
-   int bytes_na_imagem = 0;//para imagens
    char *buffer;
+   int bytes_na_imagem;//para imagens
    char buffer_imagem[BUFFER_SIZE];
    FILE *file;//para html
    int file_img = 0;//para imagem
@@ -82,7 +86,7 @@ void buscador_arquivos(char *nome_comp_do_arq, int socket){
    printf("\nCaminho completo: %s\n", caminho_total);
 
    //Aqui estamos pegando o nome do arquivo e separnado pelo .
-   //exemplo index.html, "index" será armazenado em tokens[0]
+   //exemplo /index.html, "/index" será armazenado em tokens[0]
    tokens[0] = strtok(nome_comp_do_arq,".");
    // e "html" será armazenado em tokens[1]
    tokens[1] = strtok(NULL,".");
@@ -90,7 +94,7 @@ void buscador_arquivos(char *nome_comp_do_arq, int socket){
    printf("\nNome do Arquivo: %s", tokens[0]);
    printf("\nExtensao do arquivo: %s", tokens[1]);
 
-
+   if(strcmp(tokens[1],"ico") != 0){ 
          if(strcmp(tokens[1],"html") == 0){
 
             file = fopen(caminho_total, "r");
@@ -109,7 +113,7 @@ void buscador_arquivos(char *nome_comp_do_arq, int socket){
 
                //Envia ao navegador uma resposta de sucesso, indicando que a busca pelo item foi
                //bem sucedida. Cod 200.
-               send(socket, "HTTP/1.0 200 OK\r\nContent-Type: text/html\r\n\r\n", 44, 0);
+               send(socket, "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n", 44, 0);
 
                //Agora vamos alocar o quantidade de bytes do arquivo na variavel buffer
                //para poder enviar ao socket.
@@ -139,26 +143,22 @@ void buscador_arquivos(char *nome_comp_do_arq, int socket){
 
                printf("\nArquivo encontrado!\n");
 
+               
 
                //Nota: Pesquisar o que são os parametros numéricos nessa função, não tenho certeza do que são
                //Informando que a requisição foi estabelecida com sucesso
-               send(socket, "HTTP/1.0 200 OK\r\nContent-Type: text/html\r\n\r\n", 45, 0);
+               //Muito importante dar atenção ao tipo de resposta, exemplo: image/jpeg, senão o navegador não sabe interpretar o tipo de arquivo
+               send(socket, "HTTP/1.1 200 OK\r\nContent-Type: image/jpeg\r\n\r\n", 45, 0);
 
                //Aqui ele vai entrar nesse loop e vai ler até que a leitura retorne 0
                //o que significa que não tem mais nada para ler/chegou no final do arquivo de imagem
-               while((bytes_na_imagem = read(file_img, buffer_imagem, BUFFER_SIZE)) > 0){
+               while((bytes_na_imagem = read(file_img, buffer_imagem, BUFFER_SIZE)) > 0){ 
                   //Vai colocar no socket conforme o buffer for enchendo
                   //em partes até que a imagem inteira tenha sido carregada e enviada
-                  
+
                   write(socket, buffer_imagem, bytes_na_imagem);
                   printf("\nl %d\n", bytes_na_imagem);
-
-                  if(bytes_na_imagem == 0){
-
-                     break;
-
-                  }
-
+                  printf("\nB %lu\n", strlen(buffer_imagem));
                }
 
                close(file_img);
@@ -167,9 +167,17 @@ void buscador_arquivos(char *nome_comp_do_arq, int socket){
             } else {
 
                printf("\nArquivo de imagem não encontrado!\n");
+               close(file_img);
 
             }
 
             
          }
+      } else {
+
+         printf("\nTentativa de buscar ico recusada!\n");
+
+      }
+
+   printf("\n--Saiu Buscador de Arquivos--\n");
 }

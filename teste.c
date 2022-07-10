@@ -8,8 +8,6 @@
 void iniciar(struct Servidor *servidor){
 
     //Ao chamar essa função, o servidor já está instanciado e pronto para receber a conexão.
-    printf("\nRealizando conexão na porta %i", servidor->porta);
-
 
     char buffer[BUFFER_SIZE];
     int tamanho_endereco = sizeof(servidor->endereco);
@@ -18,18 +16,19 @@ void iniciar(struct Servidor *servidor){
     while (1)
     {
 
-        printf("_________________________________________________________________");
+        printf("\n_____________________________INI_________________________________\n");
         // Loop infinito, que estará aceitando novas conexões utilizando a accept
         novo_socket = accept(servidor->socket, (struct sockaddr *)&servidor->endereco, (socklen_t *)&tamanho_endereco);
         read(novo_socket, buffer, BUFFER_SIZE);
-        request_handler(buffer,novo_socket);
-        //printf("\nreponse navegador\n");
-        //printf("%s\n", buffer);
-        //printf("\nend response navegador\n");
-        //write(novo_socket, teste, strlen(teste));
-        //close(novo_socket);
-        printf("_________________________________________________________________");
+        printf("\nInicio Requisição Navegador\n");
+        printf("%s\n", buffer);
+        printf("\nFinal Requisição navegador\n");
 
+        request_handler(buffer,novo_socket);
+        
+        //write(novo_socket, teste, strlen(teste));
+        close(novo_socket);
+        printf("\n______________________________FIM________________________________\n");
       
     }
 }

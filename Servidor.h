@@ -8,7 +8,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 
-#define PORT_NUMBER 80 //Porta utilizada
+#define PORT_NUMBER 8080 //Porta utilizada
 #define BUFFER_SIZE 4000 //Tamanho do buffer
 
 struct Servidor
