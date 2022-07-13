@@ -4,31 +4,35 @@
 #include <string.h>
 #include "Servidor.h"
 #include "HTTPRequest.h"
+#include <pthread.h>
 
 void iniciar(struct Servidor *servidor){
 
     //Ao chamar essa função, o servidor já está instanciado e pronto para receber a conexão.
 
-    char buffer[BUFFER_SIZE];
     int tamanho_endereco = sizeof(servidor->endereco);
     int novo_socket;
-    char *teste = "HTTP/1.0 200 OK\nDate: mon, 27 Jul 2009 12:28:53 GMT\nServer: Apache/2.2.14 (Win32)\nLast-Modified: Wed, 22 Jul 2009 19:15:56 GMT\nContent-Length: 88\nContent-Type: text/html\nConnection: Closed\n\n<html><body><h1>ALELUIA<img src=\"index.jpg\"></h1></body></html>";
+
     while (1)
     {
 
-        printf("\n_____________________________INI_________________________________\n");
+
+        printf("\n_____________________________INICIOU REQUISIÇÃO_________________________________\n");
+
         // Loop infinito, que estará aceitando novas conexões utilizando a accept
         novo_socket = accept(servidor->socket, (struct sockaddr *)&servidor->endereco, (socklen_t *)&tamanho_endereco);
-        read(novo_socket, buffer, BUFFER_SIZE);
-        printf("\nInicio Requisição Navegador\n");
-        printf("%s\n", buffer);
-        printf("\nFinal Requisição navegador\n");
 
-        request_handler(buffer,novo_socket);
+        
+        pthread_t thread;
+        int *pcliente = (int*) malloc(sizeof(int));
+        *pcliente = novo_socket;
+        
+        printf("\n-Socket:: %d:::::\n", *pcliente);
+        //request_handler(pcliente);
+        pthread_create(&thread, NULL, request_handler, pcliente);
         
         //write(novo_socket, teste, strlen(teste));
-        close(novo_socket);
-        printf("\n______________________________FIM________________________________\n");
+        printf("\n______________________________FINALIZOU REQUISIÇÃO________________________________\n");
       
     }
 }

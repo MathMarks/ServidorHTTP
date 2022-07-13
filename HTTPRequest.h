@@ -13,7 +13,7 @@
 
 //Essa função irá receber o pedido do cliente(Navegador) e irá tratar os diferentes pedidos que ele possa fazer.
 //Para começar, vamos lidar apenas com html e jpg
-int request_handler(char * request, int socket);
+void * request_handler(void * socket);
 void buscador_arquivos(char *nome_comp_do_arq, int socket);
 
 

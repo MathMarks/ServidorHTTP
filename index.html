@@ -5,10 +5,69 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Matheus Marques</title>
+
+    <style>
+
+        body{
+
+            background-color: antiquewhite;
+
+        }
+
+        .titulo{
+
+            align-items: center;
+            align-content: center;
+            align-self: center;
+
+        }
+
+        .series{
+
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+
+        }
+
+        .serie{
+
+            
+            align-items: center;
+
+        }
+
+        .imagem > img{
+
+            height: 450px;
+            width: 300px;
+
+        }
+
+    </style>
 </head>
 <body>
-    <h1>Teste mais complexo</h1>
-    <h2>Estamos avançando</h2>
-    <img src="./index.jpeg" alt="" width="500" height="600">
+    <h1 class="titulo">Nossas Séries Preferidas</h1>
+    <section>
+        <div class="series">
+            <div class="serie">
+                <div class="imagem"><img src="./1.jpg" alt=""></div>
+                <div class="nomeserie">The Big Bang Theory</div>
+                <div class="seriede">Thamires</div>
+                <div class="notaserie">9</div>
+            </div>
+            <div class="serie">
+                <div class="imagem"><img src="./2.jpg" alt=""></div>
+                <div class="nomeserie">Friends</div>
+                <div class="seriede">Giuliana</div>
+                <div class="notaserie">10</div>
+            </div>
+            <div class="serie">
+                <div class="imagem"><img src="./3.jpg" alt=""></div>
+                <div class="nomeserie">Game of Thrones</div>
+                <div class="seriede">Matheus</div>
+                <div class="notaserie">10</div>
+            </div>
+        </div>
+    </section>
 </body>
 </html>

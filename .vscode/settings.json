@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "httprequest.h": "c"
+        "httprequest.h": "c",
+        "fcntl.h": "c"
     }
 }

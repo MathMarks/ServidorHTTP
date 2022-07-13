@@ -12,9 +12,21 @@
 
 char PATH[100];
 
-int request_handler(char * request, int socket){
+void * request_handler(void * c_socket){
 
-    char *infos_da_requisicao[3];
+   printf("\nSocket::%d\n", * ((int*)c_socket));
+
+   int socket = * ((int*)c_socket); 
+   free(c_socket);
+   
+   char buffer[BUFFER_SIZE];
+
+   read(socket, buffer, BUFFER_SIZE);
+   printf("\nInicio Requisição Navegador\n");
+   printf("%s\n", buffer);
+   printf("\nFinal Requisição navegador\n");
+
+   char *infos_da_requisicao[3];
 
 
     //Atualiza a variável PATH para o atual PATH do usuário.  
@@ -25,7 +37,8 @@ int request_handler(char * request, int socket){
 
     } else {
        perror("\nErro ao encontrar o diretório.");
-       return 1;
+       return NULL;
+       
     }
 
     //Extrair o nome do arquivo requisitado pelo cliente de dentro da variável request.
@@ -34,7 +47,7 @@ int request_handler(char * request, int socket){
     //printf("%s\n", request); //Imprime toda a requisição do cliente e informações sobre ele
 
     //Captura o metodo, que sempre será o GET no caso dessa implementação
-    infos_da_requisicao[0] = strtok(request, " \t\n");
+    infos_da_requisicao[0] = strtok(buffer, " \t\n");
     //Captura o arquivo que o cliente está solicitando, html ou jpg até o momento
     infos_da_requisicao[1] = strtok(NULL, " \t");
     //captura a versão do HTTP em uso
@@ -44,22 +57,17 @@ int request_handler(char * request, int socket){
     printf("\nSegunda info da requisição:  %s\n", infos_da_requisicao[1]);
     printf("\nTerceira info da requisição: %s\n", infos_da_requisicao[2]);
 
-    if(strcmp(infos_da_requisicao[1],"/") == 0){
-
-      printf("\nDevolvendo arquivo principal\n");
-
-      buscador_arquivos(infos_da_requisicao[1], socket);
-
-    } else if (strcmp(infos_da_requisicao[1],"index.jpeg")){
+    if (strcmp(infos_da_requisicao[0],"")){
       
-      printf("\nDevolvendo Imagem\n");
+      printf("\nDevolvendo Arquivo! Requisição: %s Arquivo: %s\n", infos_da_requisicao[0],infos_da_requisicao[1]);
 
       buscador_arquivos(infos_da_requisicao[1], socket);
 
     }
 
    printf("\n--Saiu Request Handler--\n");
-    
+   close(socket);
+   return NULL;
 
 }
 
@@ -113,7 +121,7 @@ void buscador_arquivos(char *nome_comp_do_arq, int socket){
 
                //Envia ao navegador uma resposta de sucesso, indicando que a busca pelo item foi
                //bem sucedida. Cod 200.
-               send(socket, "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n", 44, 0);
+               send(socket, "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nKeep-Alive: timeout=5\r\nConnection: keep-alive\r\n\r\n", 44, 0);
 
                //Agora vamos alocar o quantidade de bytes do arquivo na variavel buffer
                //para poder enviar ao socket.
@@ -148,7 +156,20 @@ void buscador_arquivos(char *nome_comp_do_arq, int socket){
                //Nota: Pesquisar o que são os parametros numéricos nessa função, não tenho certeza do que são
                //Informando que a requisição foi estabelecida com sucesso
                //Muito importante dar atenção ao tipo de resposta, exemplo: image/jpeg, senão o navegador não sabe interpretar o tipo de arquivo
-               send(socket, "HTTP/1.1 200 OK\r\nContent-Type: image/jpeg\r\n\r\n", 45, 0);
+
+               char *msg = (char * ) malloc(sizeof(char)* (strlen("HTTP/1.1 200 OK\r\nContent-Type: image/jpeg\r\n")+strlen("\r\nKeep-Alive: timeout=5\r\nConnection: keep-alive\r\n")));
+
+               msg[0] = '\0';
+
+               strcat(msg,"HTTP/1.1 200 OK\r\nContent-Type: image/jpeg\r\n");
+               strcat(msg,"\r\nKeep-Alive: timeout=5\r\nConnection: keep-alive\r\n");
+
+
+               printf("\nMesagem enviada ao cliente %s\n", msg);
+               send(socket, msg, 45, 0);
+               
+
+               free(msg);
 
                //Aqui ele vai entrar nesse loop e vai ler até que a leitura retorne 0
                //o que significa que não tem mais nada para ler/chegou no final do arquivo de imagem
@@ -157,8 +178,8 @@ void buscador_arquivos(char *nome_comp_do_arq, int socket){
                   //em partes até que a imagem inteira tenha sido carregada e enviada
 
                   write(socket, buffer_imagem, bytes_na_imagem);
-                  printf("\nl %d\n", bytes_na_imagem);
-                  printf("\nB %lu\n", strlen(buffer_imagem));
+                  //printf("\nl %d\n", bytes_na_imagem);
+                  //printf("\nB %lu\n", strlen(buffer_imagem));
                }
 
                close(file_img);
