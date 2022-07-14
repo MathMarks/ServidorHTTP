@@ -5,6 +5,27 @@
 #include "Servidor.h"
 #include "HTTPRequest.h"
 #include <pthread.h>
+#include "C_fila.h"
+
+pthread_t threads[THREAD_POOL_SIZE];
+pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+
+void * manipula_pool_threads(void * arg){
+
+    while(1){
+
+        pthread_mutex_lock(&mutex);
+        int *c_socket = retira_fila();
+        pthread_mutex_unlock(&mutex);
+        
+        if(c_socket != NULL){
+
+             request_handler(c_socket);
+
+        }
+    }
+}
+
 
 void iniciar(struct Servidor *servidor){
 
@@ -22,14 +43,16 @@ void iniciar(struct Servidor *servidor){
         // Loop infinito, que estará aceitando novas conexões utilizando a accept
         novo_socket = accept(servidor->socket, (struct sockaddr *)&servidor->endereco, (socklen_t *)&tamanho_endereco);
 
-        
-        pthread_t thread;
         int *pcliente = (int*) malloc(sizeof(int));
         *pcliente = novo_socket;
-        
+
         printf("\n-Socket:: %d:::::\n", *pcliente);
+        pthread_mutex_lock(&mutex);
+        insere_fila(pcliente);
+        pthread_mutex_unlock(&mutex);
+        
         //request_handler(pcliente);
-        pthread_create(&thread, NULL, request_handler, pcliente);
+        //pthread_create(&thread, NULL, request_handler, pcliente);
         
         //write(novo_socket, teste, strlen(teste));
         printf("\n______________________________FINALIZOU REQUISIÇÃO________________________________\n");
@@ -49,6 +72,12 @@ int main() {
     //PORT_NUMBER - Porta escolhida
     //10 Backlog
     //iniciar - função inicar teste 
+    for(int i = 0; i < THREAD_POOL_SIZE; i++){
+
+        pthread_create(&threads[i], NULL, manipula_pool_threads, NULL);
+
+    }
+
     struct Servidor servidor = construtor_servidor(AF_INET, SOCK_STREAM, 0, INADDR_ANY, PORT_NUMBER, 10, iniciar);
   
     servidor.iniciar(&servidor);

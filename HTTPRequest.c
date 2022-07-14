@@ -9,6 +9,7 @@
 #include <netinet/in.h>
 #include <fcntl.h>
 #include "Servidor.h"
+#include "C_fila.h"
 
 char PATH[100];
 
