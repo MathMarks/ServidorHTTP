@@ -10,10 +10,43 @@
 #include <fcntl.h>
 #include "Servidor.h"
 #include "C_fila.h"
+#include "HTTPRequest.h"
 
 char PATH[100];
+pthread_mutex_t mutex_request = PTHREAD_MUTEX_INITIALIZER;
+
+void * manipula_fila_request(void * arg){
+
+   while (1)
+   {
+      pthread_mutex_lock(&mutex_request);
+      requestInfo* req =  retira_fila_request();
+      pthread_mutex_unlock(&mutex_request);
+      if(req != NULL){
+
+         buscador_arquivos(req);
+
+      }
+   }
+   
+}
+
 
 void * request_handler(void * c_socket){
+   //pthread_t thread = (pthread_t) malloc(sizeof(pthread_t));
+   //pthread_create(&thread, NULL, manipula_fila_request,NULL);
+   //Atualiza a variável PATH para o atual PATH do usuário.  
+   if (getcwd(PATH, sizeof(PATH)) != NULL) {
+
+      //Mostra no console qual o diretório atual do servidor, apenas para debug. 
+      //printf("\n\nDiretório atual: %s\n\n\n", PATH);
+
+   } else {
+      perror("\nErro ao encontrar o diretório.");
+      return NULL;
+      
+   }
+
 
    printf("\nSocket::%d\n", * ((int*)c_socket));
 
@@ -21,58 +54,65 @@ void * request_handler(void * c_socket){
    free(c_socket);
    
    char buffer[BUFFER_SIZE];
-
-   read(socket, buffer, BUFFER_SIZE);
-   printf("\nInicio Requisição Navegador\n");
-   printf("%s\n", buffer);
-   printf("\nFinal Requisição navegador\n");
-
    char *infos_da_requisicao[3];
+   int count = 0;
+   
+   do{ 
+      printf("\n------Dentro do request_handler----Contagem: %d\n", count); 
+      read(socket, buffer, BUFFER_SIZE);
+      printf("\nInicio Requisição Navegador\n");
+      printf("%s\n", buffer);
+      printf("\nFinal Requisição navegador\n");
 
-
-    //Atualiza a variável PATH para o atual PATH do usuário.  
-    if (getcwd(PATH, sizeof(PATH)) != NULL) {
-
-       //Mostra no console qual o diretório atual do servidor, apenas para debug. 
-       //printf("\n\nDiretório atual: %s\n\n\n", PATH);
-
-    } else {
-       perror("\nErro ao encontrar o diretório.");
-       return NULL;
-       
-    }
-
-    //Extrair o nome do arquivo requisitado pelo cliente de dentro da variável request.
-    printf("\n------Dentro do request_handler----\n");
-
-    //printf("%s\n", request); //Imprime toda a requisição do cliente e informações sobre ele
-
-    //Captura o metodo, que sempre será o GET no caso dessa implementação
-    infos_da_requisicao[0] = strtok(buffer, " \t\n");
-    //Captura o arquivo que o cliente está solicitando, html ou jpg até o momento
-    infos_da_requisicao[1] = strtok(NULL, " \t");
-    //captura a versão do HTTP em uso
-    infos_da_requisicao[2] = strtok(NULL, " \t\n");
-
-    printf("\nPrimeira info da requisição: %s\n", infos_da_requisicao[0]);
-    printf("\nSegunda info da requisição:  %s\n", infos_da_requisicao[1]);
-    printf("\nTerceira info da requisição: %s\n", infos_da_requisicao[2]);
-
-    if (strcmp(infos_da_requisicao[0],"")){
+      //Extrair o nome do arquivo requisitado pelo cliente de dentro da variável request.
       
-      printf("\nDevolvendo Arquivo! Requisição: %s Arquivo: %s\n", infos_da_requisicao[0],infos_da_requisicao[1]);
 
-      buscador_arquivos(infos_da_requisicao[1], socket);
+      //printf("%s\n", request); //Imprime toda a requisição do cliente e informações sobre ele
 
-    }
+      //Captura o metodo, que sempre será o GET no caso dessa implementação
+      infos_da_requisicao[0] = strtok(buffer, " \t\n");
+      //Captura o arquivo que o cliente está solicitando, html ou jpg até o momento
+      infos_da_requisicao[1] = strtok(NULL, " \t");
+      //captura a versão do HTTP em uso
+      infos_da_requisicao[2] = strtok(NULL, " \t\n");
 
-   printf("\n--Saiu Request Handler--\n");
+      printf("\nPrimeira info da requisição: %s\n", infos_da_requisicao[0]);
+      printf("\nSegunda info da requisição:  %s\n", infos_da_requisicao[1]);
+      printf("\nTerceira info da requisição: %s\n", infos_da_requisicao[2]);
+
+      if (strcmp(infos_da_requisicao[0],"")){
+         
+         printf("\nDevolvendo Arquivo! Requisição: %s Arquivo: %s\n", infos_da_requisicao[0],infos_da_requisicao[1]);
+
+         pthread_mutex_lock(&mutex_request);
+         insere_fila_request(&socket, infos_da_requisicao[1]);
+         pthread_mutex_unlock(&mutex_request);
+         
+
+         //pthread_create(&thread, NULL, buscador_arquivos, cria_request(infos_da_requisicao[1], &socket));
+         //buscador_arquivos(cria_request(infos_da_requisicao[1], &socket));
+         printf("\nDebug\n");
+
+      } 
+   count++;
+   } while (1);
+
+
+      printf("\n--Saiu Request Handler--\n");
+      //sclose(socket);
    close(socket);
+
    return NULL;
 
-}
+} 
 
-void buscador_arquivos(char *nome_comp_do_arq, int socket){
+void * buscador_arquivos(void * reqv){
+
+   requestInfo * req = (requestInfo*)reqv;
+
+   char *nome_comp_do_arq = req->buffer;
+   int socket = *((int*)req->socket);
+   free(req);
 
    //Então temos o nome ou caminho do arquivo e o diretório no servidor que o arquivo está.
    //Agora vamos alocar uma variável para armazenar esse caminho completo, que é a união

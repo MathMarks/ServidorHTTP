@@ -9,7 +9,7 @@
 #include <netinet/in.h>
 
 
-#define PORT_NUMBER 80 //Porta utilizada
+#define PORT_NUMBER 8888 //Porta utilizada
 #define BUFFER_SIZE 4000 //Tamanho do buffer
 #define THREAD_POOL_SIZE 10 //Quantidade de threads possíveis simultâneamente
 

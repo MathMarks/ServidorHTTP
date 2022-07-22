@@ -6,16 +6,19 @@
 #include "HTTPRequest.h"
 #include <pthread.h>
 #include "C_fila.h"
+#include <time.h>
 
-pthread_t threads[THREAD_POOL_SIZE];
+pthread_t threads_cliente[THREAD_POOL_SIZE];
+pthread_t threads_request[THREAD_POOL_SIZE];
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+
 
 void * manipula_pool_threads(void * arg){
 
     while(1){
 
         pthread_mutex_lock(&mutex);
-        int *c_socket = retira_fila();
+        int *c_socket = retira_fila_cliente();
         pthread_mutex_unlock(&mutex);
         
         if(c_socket != NULL){
@@ -34,8 +37,7 @@ void iniciar(struct Servidor *servidor){
     int tamanho_endereco = sizeof(servidor->endereco);
     int novo_socket;
 
-    while (1)
-    {
+    while (1){
 
 
         printf("\n_____________________________INICIOU REQUISIÇÃO_________________________________\n");
@@ -48,7 +50,7 @@ void iniciar(struct Servidor *servidor){
 
         printf("\n-Socket:: %d:::::\n", *pcliente);
         pthread_mutex_lock(&mutex);
-        insere_fila(pcliente);
+        insere_fila_cliente(pcliente);
         pthread_mutex_unlock(&mutex);
         
         //request_handler(pcliente);
@@ -56,7 +58,7 @@ void iniciar(struct Servidor *servidor){
         
         //write(novo_socket, teste, strlen(teste));
         printf("\n______________________________FINALIZOU REQUISIÇÃO________________________________\n");
-      
+      sleep(1000);
     }
 }
 
@@ -74,7 +76,12 @@ int main() {
     //iniciar - função inicar teste 
     for(int i = 0; i < THREAD_POOL_SIZE; i++){
 
-        pthread_create(&threads[i], NULL, manipula_pool_threads, NULL);
+        pthread_create(&threads_cliente[i], NULL, manipula_pool_threads, NULL);
+
+    }
+    for(int i = 0; i < THREAD_POOL_SIZE; i++){
+
+        pthread_create(&threads_request[i], NULL, manipula_fila_request, NULL);
 
     }
 
