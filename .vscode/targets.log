@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri Jul 22 13:48:12 2022
+# Make data base, printed on Tue Jul 26 19:29:21 2022
 
 # Variables
 
@@ -17,15 +17,11 @@ LC_ALL = C
 # environment
 GTK_RC_FILES = /etc/gtk/gtkrc:/home/matheus/.gtkrc:/home/matheus/.config/gtkrc
 # environment
-KONSOLE_DBUS_SERVICE = :1.2611
-# environment
 LC_NAME = pt_BR.UTF-8
 # environment
 LC_NUMERIC = pt_BR.UTF-8
 # environment
-VSCODE_CWD = /home/matheus/Documents/Faculdade/Redes/TrabalhoPratico/ServidorHTTP
-# environment
-WINDOWID = 88080391
+VSCODE_CWD = /home/matheus
 # environment
 LC_ADDRESS = pt_BR.UTF-8
 # default
@@ -34,8 +30,6 @@ MAKE_COMMAND := make
 QT_ACCESSIBILITY = 1
 # automatic
 @D = $(patsubst %/,%,$(dir $@))
-# environment
-KONSOLE_VERSION = 211203
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
@@ -46,8 +40,6 @@ PWD = /home/matheus/Documents/Faculdade/Redes/TrabalhoPratico/ServidorHTTP
 %D = $(patsubst %/,%,$(dir $%))
 # environment
 XDG_DATA_DIRS = /usr/share/plasma:/usr/share/gnome:/home/matheus/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share:/var/lib/snapd/desktop
-# environment
-KONSOLE_DBUS_WINDOW = /Windows/1
 # automatic
 ^D = $(patsubst %/,%,$(dir $^))
 # automatic
@@ -55,7 +47,7 @@ KONSOLE_DBUS_WINDOW = /Windows/1
 # environment
 VSCODE_CODE_CACHE_PATH = /home/matheus/.config/Code/CachedData/3b889b090b5ad5793f524b5d1d39fda662b96a2a
 # environment
-XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session2
+XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session1
 # environment
 LANG = C
 # environment
@@ -64,8 +56,6 @@ XAUTHORITY = /home/matheus/.Xauthority
 .LOADED := 
 # default
 .INCLUDE_DIRS = /usr/local/include /usr/include /usr/include
-# environment
-COLORFGBG = 15;0
 # makefile
 MAKEFLAGS = pqrR
 # makefile
@@ -81,7 +71,7 @@ PAM_KWALLET5_LOGIN = /run/user/1000/kwallet5.socket
 # environment
 MFLAGS = -pqrR
 # environment
-SSH_AUTH_SOCK = /tmp/ssh-XXXXXXfbMvAW/agent.1354
+SSH_AUTH_SOCK = /tmp/ssh-XXXXXXzzTVcp/agent.1342
 # default
 .SHELLFLAGS := -c
 # environment
@@ -97,13 +87,13 @@ MAKEFILE_LIST := Makefile
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 216914
+VSCODE_PID = 4253
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/matheus-dell:@/tmp/.ICE-unix/1721,unix/matheus-dell:/tmp/.ICE-unix/1721
+SESSION_MANAGER = local/matheus-dell:@/tmp/.ICE-unix/1693,unix/matheus-dell:/tmp/.ICE-unix/1693
 # automatic
 *F = $(notdir $*)
 # environment
@@ -121,19 +111,15 @@ SHELL = /bin/sh
 # default
 MAKECMDGOALS := all
 # environment
-SHLVL = 1
-# environment
-PROFILEHOME = 
+SHLVL = 0
 # environment
 MAKELEVEL := 0
 # default
 MAKE = $(MAKE_COMMAND)
 # environment
-PATH = /home/matheus/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+PATH = /home/matheus/.local/bin:/home/matheus/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 # default
 MAKEFILES := 
-# environment
-LANGUAGE = 
 # environment
 LC_MONETARY = pt_BR.UTF-8
 # automatic
@@ -153,7 +139,7 @@ XDG_SEAT = seat0
 # environment
 XDG_CURRENT_DESKTOP = KDE
 # environment
-LS_COLORS = rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
+LS_COLORS = 
 # automatic
 +F = $(notdir $+)
 # environment
@@ -169,9 +155,9 @@ LOGNAME = matheus
 # environment
 XDG_VTNR = 1
 # makefile
-.DEFAULT_GOAL := 
+.DEFAULT_GOAL := all
 # environment
-SYSTEMD_EXEC_PID = 1323
+SYSTEMD_EXEC_PID = 1312
 # environment
 DISPLAY = :0
 # environment
@@ -181,21 +167,17 @@ MAKE_VERSION := 4.3
 # environment
 KDE_SESSION_UID = 1000
 # environment
-KONSOLE_DBUS_SESSION = /Sessions/1
-# environment
 LC_MEASUREMENT = pt_BR.UTF-8
 # environment
-SSH_AGENT_PID = 1504
+SSH_AGENT_PID = 1492
 # environment
-_ = /usr/bin/code
+_ = /usr/share/code/code
 # environment
 LC_PAPER = pt_BR.UTF-8
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
-# environment
-COLORTERM = truecolor
 # environment
 LC_CTYPE = pt_BR.UTF-8
 # environment
@@ -211,8 +193,6 @@ ELECTRON_RUN_AS_NODE = 1
 # environment
 VSCODE_IPC_HOOK = /run/user/1000/vscode-b26710e1-1.69.2-main.sock
 # environment
-TERM = xterm-256color
-# environment
 XDG_SESSION_ID = 3
 # environment
 XCURSOR_SIZE = 24
@@ -227,12 +207,6 @@ SUFFIXES :=
 # environment
 QT_AUTO_SCREEN_SCALE_FACTOR = 0
 # environment
-VSCODE_CLI = 1
-# environment
-ELECTRON_NO_ATTACH_CONSOLE = 1
-# environment
-SHELL_SESSION_ID = ccf090ab2aa04a63b27aa2ef5c29abeb
-# environment
 KDE_SESSION_VERSION = 5
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync check-symlink load
@@ -241,7 +215,7 @@ KDE_FULL_SESSION = true
 # environment
 LC_IDENTIFICATION = pt_BR.UTF-8
 # variable set hash-table stats:
-# Load=115/1024=11%, Rehash=0, Collisions=7/144=5%
+# Load=102/1024=10%, Rehash=0, Collisions=3/135=2%
 
 # Pattern-specific Variable Values
 
@@ -249,9 +223,9 @@ LC_IDENTIFICATION = pt_BR.UTF-8
 
 # Directories
 
-# . (device 2050, inode 4459511): 31 files, no impossibilities.
+# . (device 2050, inode 4459511): 28 files, no impossibilities.
 
-# 31 files, no impossibilities in 1 directories.
+# 28 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -260,11 +234,52 @@ LC_IDENTIFICATION = pt_BR.UTF-8
 # Files
 
 # Not a target:
+Servidor.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-22 13:48:00.753491025
+#  Last modified 2022-07-23 20:52:52.875955456
 #  File has been updated.
 #  Successfully updated.
+
+# Not a target:
+C_fila.h:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-20 22:32:54.949210759
+#  File has been updated.
+#  Successfully updated.
+
+clean:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 20):
+	rm -rf *.o *~ http
+
+# Not a target:
+Servidor.h:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-26 00:58:15.916175406
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+C_fila.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+HTTPRequest.h:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-20 23:58:17.991644619
+#  File has been updated.
+#  Successfully updated.
+ 
 
 # Not a target:
 .DEFAULT:
@@ -272,30 +287,106 @@ Makefile:
 #  Modification time never checked.
 #  File has not been updated.
 
-# Not a target:
-all:
+all: run
 #  Command line target.
 #  Implicit rule search has been done.
 #  File does not exist.
- 
-make: *** No rule to make target 'all'.  Stop.
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/3=0%
 
+run: main.o C_fila.o Servidor.o HTTPRequest.o
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/3=0%
+#  recipe to execute (from 'Makefile', line 5):
+	gcc -o http main.o C_fila.o Servidor.o HTTPRequest.o
+
+# Not a target:
+HTTPRequest.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+main.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-26 12:42:33.625530589
+#  File has been updated.
+#  Successfully updated.
+
+main.o: main.c C_fila.h Servidor.h HTTPRequest.h
+#  Implicit rule search has not been done.
+#  Implicit/static pattern stem: ''
+#  Last modified 2022-07-26 01:00:17.990443552
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# automatic
+# @ := main.o
+# automatic
+# * := 
+# automatic
+# < := main.c
+# automatic
+# + := main.c C_fila.h Servidor.h HTTPRequest.h
+# automatic
+# % := 
+# automatic
+# ^ := main.c C_fila.h Servidor.h HTTPRequest.h
+# automatic
+# ? := main.c
+# automatic
+# | := 
+# variable set hash-table stats:
+# Load=8/32=25%, Rehash=0, Collisions=1/11=9%
+#  recipe to execute (from 'Makefile', line 8):
+	gcc -o main.o main.c -c -W -Wall  -pedantic
+
+HTTPRequest.o: HTTPRequest.c HTTPRequest.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 17):
+	gcc -o HTTPRequest.o HTTPRequest.c -c -W -Wall  -pedantic
+
+C_fila.o: C_fila.c C_fila.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 11):
+	gcc -o C_fila.o C_fila.c -c -W -Wall  -pedantic
+
+Servidor.o: Servidor.c Servidor.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 14):
+	gcc -o Servidor.o Servidor.c -c -W -Wall  -pedantic
+
+# Not a target:
+.SUFFIXES:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
 #  File has not been updated.
 
 # files hash-table stats:
-# Load=4/1024=0%, Rehash=0, Collisions=0/14=0%
+# Load=17/1024=2%, Rehash=0, Collisions=0/49=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 36 / storage = 316 B / avg = 8 B
-# current buf: size = 8162 B / used = 316 B / count = 36 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 35 / storage = 315 B / avg = 9 B
+# current buf: size = 8162 B / used = 315 B / count = 35 / avg = 9 B
 
-# strcache performance: lookups = 40 / hit rate = 10%
+# strcache performance: lookups = 67 / hit rate = 47%
 # hash-table stats:
-# Load=36/8192=0%, Rehash=0, Collisions=0/40=0%
-# Finished Make data base on Fri Jul 22 13:48:12 2022
+# Load=35/8192=0%, Rehash=0, Collisions=0/67=0%
+# Finished Make data base on Tue Jul 26 19:29:21 2022
 
  

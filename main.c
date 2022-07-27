@@ -9,7 +9,7 @@
 #include <time.h>
 
 pthread_t threads_cliente[THREAD_POOL_SIZE];
-pthread_t threads_request[THREAD_POOL_SIZE];
+pthread_t threads_request;
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
 
@@ -58,13 +58,23 @@ void iniciar(struct Servidor *servidor){
         
         //write(novo_socket, teste, strlen(teste));
         printf("\n______________________________FINALIZOU REQUISIÇÃO________________________________\n");
-      sleep(1000);
+        sleep(100);
     }
 }
 
 int main() {
 
     //Com isso temos uma estrutura de servidor funcionando, agora iniciar a parsing de mensagens.
+    for(int i = 0; i < THREAD_POOL_SIZE; i++){
+
+        pthread_create(&threads_cliente[i], NULL, manipula_pool_threads, NULL);
+
+    }
+    
+
+        pthread_create(&threads_request, NULL, manipula_fila_request, NULL);
+
+    
 
     //AF_INET - Comunicação ipv4 (AF - Address Family, INET - Internet)
     //SOCK_STREAM - tipo de comunicação
@@ -74,17 +84,6 @@ int main() {
     //PORT_NUMBER - Porta escolhida
     //10 Backlog
     //iniciar - função inicar teste 
-    for(int i = 0; i < THREAD_POOL_SIZE; i++){
-
-        pthread_create(&threads_cliente[i], NULL, manipula_pool_threads, NULL);
-
-    }
-    for(int i = 0; i < THREAD_POOL_SIZE; i++){
-
-        pthread_create(&threads_request[i], NULL, manipula_fila_request, NULL);
-
-    }
-
     struct Servidor servidor = construtor_servidor(AF_INET, SOCK_STREAM, 0, INADDR_ANY, PORT_NUMBER, 10, iniciar);
   
     servidor.iniciar(&servidor);

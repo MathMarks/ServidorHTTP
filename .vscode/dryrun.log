@@ -1,6 +1,9 @@
 make --dry-run --always-make --keep-going --print-directory
 make: Entering directory '/home/matheus/Documents/Faculdade/Redes/TrabalhoPratico/ServidorHTTP'
+gcc -o main.o main.c -c -W -Wall  -pedantic
+gcc -o C_fila.o C_fila.c -c -W -Wall  -pedantic
+gcc -o Servidor.o Servidor.c -c -W -Wall  -pedantic
+gcc -o HTTPRequest.o HTTPRequest.c -c -W -Wall  -pedantic
+gcc -o http main.o C_fila.o Servidor.o HTTPRequest.o
 make: Leaving directory '/home/matheus/Documents/Faculdade/Redes/TrabalhoPratico/ServidorHTTP'
  
-make: *** No targets.  Stop.
-

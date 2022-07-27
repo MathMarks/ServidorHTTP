@@ -13,24 +13,6 @@
 #include "HTTPRequest.h"
 
 char PATH[100];
-pthread_mutex_t mutex_request = PTHREAD_MUTEX_INITIALIZER;
-
-void * manipula_fila_request(void * arg){
-
-   while (1)
-   {
-      pthread_mutex_lock(&mutex_request);
-      requestInfo* req =  retira_fila_request();
-      pthread_mutex_unlock(&mutex_request);
-      if(req != NULL){
-
-         buscador_arquivos(req);
-
-      }
-   }
-   
-}
-
 
 void * request_handler(void * c_socket){
    //pthread_t thread = (pthread_t) malloc(sizeof(pthread_t));
@@ -39,7 +21,7 @@ void * request_handler(void * c_socket){
    if (getcwd(PATH, sizeof(PATH)) != NULL) {
 
       //Mostra no console qual o diretório atual do servidor, apenas para debug. 
-      //printf("\n\nDiretório atual: %s\n\n\n", PATH);
+      printf("\n\nDiretório atual: %s\n\n\n", PATH);
 
    } else {
       perror("\nErro ao encontrar o diretório.");
@@ -57,9 +39,9 @@ void * request_handler(void * c_socket){
    char *infos_da_requisicao[3];
    int count = 0;
    
-   do{ 
+   while(recv(socket, buffer, BUFFER_SIZE,0) > 0){ 
       printf("\n------Dentro do request_handler----Contagem: %d\n", count); 
-      read(socket, buffer, BUFFER_SIZE);
+      //read(socket, buffer, BUFFER_SIZE);
       printf("\nInicio Requisição Navegador\n");
       printf("%s\n", buffer);
       printf("\nFinal Requisição navegador\n");
@@ -80,29 +62,31 @@ void * request_handler(void * c_socket){
       printf("\nSegunda info da requisição:  %s\n", infos_da_requisicao[1]);
       printf("\nTerceira info da requisição: %s\n", infos_da_requisicao[2]);
 
-      if (strcmp(infos_da_requisicao[0],"")){
+      if (strlen(infos_da_requisicao[1])>0){
          
          printf("\nDevolvendo Arquivo! Requisição: %s Arquivo: %s\n", infos_da_requisicao[0],infos_da_requisicao[1]);
 
-         pthread_mutex_lock(&mutex_request);
-         insere_fila_request(&socket, infos_da_requisicao[1]);
-         pthread_mutex_unlock(&mutex_request);
          
+         insere_fila_request(&socket, infos_da_requisicao[1]);
+         
+         
+         printf("\nInseriu Fila\n");
 
          //pthread_create(&thread, NULL, buscador_arquivos, cria_request(infos_da_requisicao[1], &socket));
          //buscador_arquivos(cria_request(infos_da_requisicao[1], &socket));
          printf("\nDebug\n");
-
+        
       } 
    count++;
-   } while (1);
+   }
 
 
       printf("\n--Saiu Request Handler--\n");
       //sclose(socket);
    close(socket);
 
-   return NULL;
+  
+return NULL;
 
 } 
 
@@ -162,11 +146,12 @@ void * buscador_arquivos(void * reqv){
 
                //Envia ao navegador uma resposta de sucesso, indicando que a busca pelo item foi
                //bem sucedida. Cod 200.
-               send(socket, "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nKeep-Alive: timeout=5\r\nConnection: keep-alive\r\n\r\n", 44, 0);
+               send(socket, "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nKeep-Alive: timeout=5\r\nConnection: keep-alive\r\n\r\n", 101, 0);
 
                //Agora vamos alocar o quantidade de bytes do arquivo na variavel buffer
                //para poder enviar ao socket.
                buffer = (char *) malloc(bytes_no_arquivo * sizeof(char));
+               //buffer[0] = "\0";
 
                //Aqui vamos de fato ler o arquivo html para armazenar no buffer   
                fread(buffer, bytes_no_arquivo, 1, file);
@@ -174,7 +159,6 @@ void * buscador_arquivos(void * reqv){
                write(socket, buffer, bytes_no_arquivo);
 
                free(buffer);
-               free(caminho_total);
                fclose(file);
 
             } else {
@@ -192,22 +176,19 @@ void * buscador_arquivos(void * reqv){
 
                printf("\nArquivo encontrado!\n");
 
-               
-
-               //Nota: Pesquisar o que são os parametros numéricos nessa função, não tenho certeza do que são
                //Informando que a requisição foi estabelecida com sucesso
                //Muito importante dar atenção ao tipo de resposta, exemplo: image/jpeg, senão o navegador não sabe interpretar o tipo de arquivo
 
-               char *msg = (char * ) malloc(sizeof(char)* (strlen("HTTP/1.1 200 OK\r\nContent-Type: image/jpeg\r\n")+strlen("\r\nKeep-Alive: timeout=5\r\nConnection: keep-alive\r\n")));
+               char *msg = (char * ) malloc(sizeof(char)* (strlen("HTTP/1.1 200 OK\r\nContent-Type: image/jpeg\r\n")+strlen("Keep-Alive: timeout=5\r\nConnection: keep-alive\r\n")));
 
                msg[0] = '\0';
 
                strcat(msg,"HTTP/1.1 200 OK\r\nContent-Type: image/jpeg\r\n");
-               strcat(msg,"\r\nKeep-Alive: timeout=5\r\nConnection: keep-alive\r\n");
+               strcat(msg,"Keep-Alive: timeout=5\r\nConnection: keep-alive\r\n");
 
 
-               printf("\nMesagem enviada ao cliente %s\n", msg);
-               send(socket, msg, 45, 0);
+               printf("\nMesagem enviada ao cliente %s\nTamanho total: %ld\n", msg, strlen(msg));
+               send(socket, msg, strlen(msg), 0);
                
 
                free(msg);
@@ -242,4 +223,5 @@ void * buscador_arquivos(void * reqv){
       }
 
    printf("\n--Saiu Buscador de Arquivos--\n");
+   return NULL;
 }

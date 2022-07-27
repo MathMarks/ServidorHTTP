@@ -1,6 +1,8 @@
 
 
 #include <stdlib.h>
+#include <stdio.h>
+#include "HTTPRequest.h"
 #include "C_fila.h"
 
 node_c * ini_cliente = NULL;
@@ -8,6 +10,8 @@ node_c * fim_cliente = NULL;
 
 node_r * ini_request = NULL;
 node_r * fim_request = NULL;
+
+pthread_mutex_t mutex_request = PTHREAD_MUTEX_INITIALIZER;
 
 
 void insere_fila_cliente(int *socket){
@@ -63,7 +67,7 @@ requestInfo * cria_request(char * buffer, int * socket){
 }
 
 void insere_fila_request(int *socket, char * buffer){
-
+    pthread_mutex_lock(&mutex_request);
     node_r * novo_no = malloc(sizeof(node_r));
     requestInfo * novo_request = malloc(sizeof(requestInfo));
     novo_no->request = novo_request;
@@ -82,7 +86,7 @@ void insere_fila_request(int *socket, char * buffer){
     }
 
     fim_request = novo_no;
-
+    pthread_mutex_unlock(&mutex_request);
 }
 
 requestInfo * retira_fila_request(){
@@ -107,4 +111,24 @@ requestInfo * retira_fila_request(){
 
     return NULL;
 
+}
+
+void * manipula_fila_request(void * arg){
+
+   while (1)
+   {
+
+      pthread_mutex_lock(&mutex_request);
+      requestInfo* req =  retira_fila_request();
+      pthread_mutex_unlock(&mutex_request);
+      if(req != NULL){
+         
+         buscador_arquivos(req);
+         
+         printf("\nTirou fila\n");
+
+      }
+      
+   }
+   
 }
