@@ -1,0 +1,5 @@
+localhost:8888/index.html
+localhost:8888/1.jpg
+localhost:8888/2.jpg
+localhost:8888/3.jpg
+

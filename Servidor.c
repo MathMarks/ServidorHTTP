@@ -2,13 +2,14 @@
 #include "Servidor.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 
 //Construtor 
 struct Servidor construtor_servidor(int domain, int servico, int protocolo, u_long interface, int porta, int backlog, void (*iniciar)(struct Servidor *servidor))
 {
 
-    printf("\nIniciou a contrução do servidor.\n");
+    printf("\nIniciou a contrução do servidor.\r");
     struct Servidor servidor;
 
     servidor.domain = domain;
@@ -50,12 +51,12 @@ struct Servidor construtor_servidor(int domain, int servico, int protocolo, u_lo
         exit(1);
     }
     
-    
-    printf("Aguardando conexão na porta: %i",porta);
+    printf("Servidor criado com sucesso...........\n");
+    sleep(2);
+    printf("Porta em uso pelo servidor:\033[35m %i \e[0;37m\n",porta);
     servidor.iniciar = iniciar;
 
     
-
     return servidor;
     // Cria o "objeto" servidor e retorna para quem  o instanciou, criando o socket, ligando esse socket ao endereço( binding ), e começará a escutar e procurará por erros.
 }

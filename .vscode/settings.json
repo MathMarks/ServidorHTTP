@@ -3,6 +3,7 @@
         "httprequest.h": "c",
         "fcntl.h": "c",
         "c_fila.h": "c",
-        "servidor.h": "c"
+        "servidor.h": "c",
+        "stdlib.h": "c"
     }
 }

@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue Jul 26 19:29:21 2022
+# Make data base, printed on Sat Jul 30 14:05:32 2022
 
 # Variables
 
@@ -71,7 +71,7 @@ PAM_KWALLET5_LOGIN = /run/user/1000/kwallet5.socket
 # environment
 MFLAGS = -pqrR
 # environment
-SSH_AUTH_SOCK = /tmp/ssh-XXXXXXzzTVcp/agent.1342
+SSH_AUTH_SOCK = /tmp/ssh-XXXXXXv3o1k5/agent.1399
 # default
 .SHELLFLAGS := -c
 # environment
@@ -87,13 +87,13 @@ MAKEFILE_LIST := Makefile
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 4253
+VSCODE_PID = 12419
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/matheus-dell:@/tmp/.ICE-unix/1693,unix/matheus-dell:/tmp/.ICE-unix/1693
+SESSION_MANAGER = local/matheus-dell:@/tmp/.ICE-unix/1765,unix/matheus-dell:/tmp/.ICE-unix/1765
 # automatic
 *F = $(notdir $*)
 # environment
@@ -157,7 +157,7 @@ XDG_VTNR = 1
 # makefile
 .DEFAULT_GOAL := all
 # environment
-SYSTEMD_EXEC_PID = 1312
+SYSTEMD_EXEC_PID = 1370
 # environment
 DISPLAY = :0
 # environment
@@ -169,7 +169,7 @@ KDE_SESSION_UID = 1000
 # environment
 LC_MEASUREMENT = pt_BR.UTF-8
 # environment
-SSH_AGENT_PID = 1492
+SSH_AGENT_PID = 1534
 # environment
 _ = /usr/share/code/code
 # environment
@@ -223,9 +223,9 @@ LC_IDENTIFICATION = pt_BR.UTF-8
 
 # Directories
 
-# . (device 2050, inode 4459511): 28 files, no impossibilities.
+# . (device 2050, inode 4459511): 33 files, no impossibilities.
 
-# 28 files, no impossibilities in 1 directories.
+# 33 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -235,9 +235,10 @@ LC_IDENTIFICATION = pt_BR.UTF-8
 
 # Not a target:
 Servidor.c:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+#  Implicit rule search has been done.
+#  Last modified 2022-07-29 21:10:42.191270251
+#  File has been updated.
+#  Successfully updated.
 
 # Not a target:
 Makefile:
@@ -249,7 +250,7 @@ Makefile:
 # Not a target:
 C_fila.h:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-20 22:32:54.949210759
+#  Last modified 2022-07-28 11:21:43.931177924
 #  File has been updated.
 #  Successfully updated.
 
@@ -263,29 +264,30 @@ clean:
 # Not a target:
 Servidor.h:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-26 00:58:15.916175406
+#  Last modified 2022-07-26 20:19:09.855187711
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 C_fila.c:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+#  Implicit rule search has been done.
+#  Last modified 2022-07-28 11:21:42.503148931
+#  File has been updated.
+#  Successfully updated.
 
 # Not a target:
 HTTPRequest.h:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-20 23:58:17.991644619
+#  Last modified 2022-07-29 19:20:44.756147926
 #  File has been updated.
 #  Successfully updated.
- 
 
 # Not a target:
 .DEFAULT:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
+ 
 
 all: run
 #  Command line target.
@@ -298,72 +300,74 @@ all: run
 
 run: main.o C_fila.o Servidor.o HTTPRequest.o
 #  Implicit rule search has not been done.
+#  Implicit/static pattern stem: ''
 #  File does not exist.
 #  File has been updated.
 #  Needs to be updated (-q is set).
+# automatic
+# @ := run
+# automatic
+# * := 
+# automatic
+# < := main.o
+# automatic
+# + := main.o C_fila.o Servidor.o HTTPRequest.o
+# automatic
+# % := 
+# automatic
+# ^ := main.o C_fila.o Servidor.o HTTPRequest.o
+# automatic
+# ? := main.o C_fila.o Servidor.o HTTPRequest.o
+# automatic
+# | := 
 # variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/3=0%
+# Load=8/32=25%, Rehash=0, Collisions=1/11=9%
 #  recipe to execute (from 'Makefile', line 5):
 	gcc -o http main.o C_fila.o Servidor.o HTTPRequest.o
 
 # Not a target:
 HTTPRequest.c:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+#  Implicit rule search has been done.
+#  Last modified 2022-07-29 19:20:46.552102742
+#  File has been updated.
+#  Successfully updated.
 
 # Not a target:
 main.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-26 12:42:33.625530589
+#  Last modified 2022-07-29 20:47:49.139431245
 #  File has been updated.
 #  Successfully updated.
 
 main.o: main.c C_fila.h Servidor.h HTTPRequest.h
 #  Implicit rule search has not been done.
-#  Implicit/static pattern stem: ''
-#  Last modified 2022-07-26 01:00:17.990443552
+#  Last modified 2022-07-29 20:48:04.935442575
 #  File has been updated.
-#  Needs to be updated (-q is set).
-# automatic
-# @ := main.o
-# automatic
-# * := 
-# automatic
-# < := main.c
-# automatic
-# + := main.c C_fila.h Servidor.h HTTPRequest.h
-# automatic
-# % := 
-# automatic
-# ^ := main.c C_fila.h Servidor.h HTTPRequest.h
-# automatic
-# ? := main.c
-# automatic
-# | := 
-# variable set hash-table stats:
-# Load=8/32=25%, Rehash=0, Collisions=1/11=9%
+#  Successfully updated.
 #  recipe to execute (from 'Makefile', line 8):
 	gcc -o main.o main.c -c -W -Wall  -pedantic
 
 HTTPRequest.o: HTTPRequest.c HTTPRequest.h
 #  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+#  Last modified 2022-07-29 19:52:57.130500318
+#  File has been updated.
+#  Successfully updated.
 #  recipe to execute (from 'Makefile', line 17):
 	gcc -o HTTPRequest.o HTTPRequest.c -c -W -Wall  -pedantic
 
 C_fila.o: C_fila.c C_fila.h
 #  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+#  Last modified 2022-07-28 12:09:45.874346076
+#  File has been updated.
+#  Successfully updated.
 #  recipe to execute (from 'Makefile', line 11):
 	gcc -o C_fila.o C_fila.c -c -W -Wall  -pedantic
 
 Servidor.o: Servidor.c Servidor.h
 #  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+#  Last modified 2022-07-29 21:10:49.33142356
+#  File has been updated.
+#  Successfully updated.
 #  recipe to execute (from 'Makefile', line 14):
 	gcc -o Servidor.o Servidor.c -c -W -Wall  -pedantic
 
@@ -381,12 +385,12 @@ Servidor.o: Servidor.c Servidor.h
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 35 / storage = 315 B / avg = 9 B
-# current buf: size = 8162 B / used = 315 B / count = 35 / avg = 9 B
+# strcache buffers: 1 (0) / strings = 40 / storage = 368 B / avg = 9 B
+# current buf: size = 8162 B / used = 368 B / count = 40 / avg = 9 B
 
-# strcache performance: lookups = 67 / hit rate = 47%
+# strcache performance: lookups = 72 / hit rate = 44%
 # hash-table stats:
-# Load=35/8192=0%, Rehash=0, Collisions=0/67=0%
-# Finished Make data base on Tue Jul 26 19:29:21 2022
+# Load=40/8192=0%, Rehash=0, Collisions=0/72=0%
+# Finished Make data base on Sat Jul 30 14:05:32 2022
 
  

@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "HTTPRequest.h"
+#include <string.h>
 #include "C_fila.h"
 
 node_c * ini_cliente = NULL;
@@ -14,10 +15,15 @@ node_r * fim_request = NULL;
 pthread_mutex_t mutex_request = PTHREAD_MUTEX_INITIALIZER;
 
 
-void insere_fila_cliente(int *socket){
+void insere_fila_cliente(int *socket, char * ip_cliente, int porta_cliente){
 
     node_c * novo_no = malloc(sizeof(node_c));
     novo_no->socket = socket;
+    //novo_no->ip_cliente = ip_cliente;
+    printf("\nInserindo na fila o cliente %s usando a porta %d\n", ip_cliente, porta_cliente);
+    novo_no->ip_cliente = (char*) malloc(sizeof(char) * 15);
+    novo_no->ip_cliente = ip_cliente;
+    novo_no->porta_cliente = porta_cliente;
     novo_no->prox = NULL;
 
     if(fim_cliente == NULL){

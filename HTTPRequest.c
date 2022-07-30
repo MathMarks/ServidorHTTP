@@ -14,10 +14,8 @@
 
 char PATH[100];
 
-void * request_handler(void * c_socket){
-   //pthread_t thread = (pthread_t) malloc(sizeof(pthread_t));
-   //pthread_create(&thread, NULL, manipula_fila_request,NULL);
-   //Atualiza a variável PATH para o atual PATH do usuário.  
+void atualiza_path(){
+
    if (getcwd(PATH, sizeof(PATH)) != NULL) {
 
       //Mostra no console qual o diretório atual do servidor, apenas para debug. 
@@ -28,6 +26,14 @@ void * request_handler(void * c_socket){
       return NULL;
       
    }
+
+}
+
+void * request_handler(void * c_socket){
+   //pthread_t thread = (pthread_t) malloc(sizeof(pthread_t));
+   //pthread_create(&thread, NULL, manipula_fila_request,NULL);
+   //Atualiza a variável PATH para o atual PATH do usuário.  
+   atualiza_path();
 
 
    printf("\nSocket::%d\n", * ((int*)c_socket));
@@ -78,6 +84,7 @@ void * request_handler(void * c_socket){
         
       } 
    count++;
+   sleep(5);
    }
 
 
@@ -111,6 +118,7 @@ void * buscador_arquivos(void * reqv){
    int bytes_na_imagem;//para imagens
    char buffer_imagem[BUFFER_SIZE];
    FILE *file;//para html
+   FILE *file_img_size;
    int file_img = 0;//para imagem
    
    strcpy(caminho_total, PATH);
@@ -144,10 +152,6 @@ void * buscador_arquivos(void * reqv){
                bytes_no_arquivo = ftell(file);
                fseek(file, 0, SEEK_SET);
 
-               //Envia ao navegador uma resposta de sucesso, indicando que a busca pelo item foi
-               //bem sucedida. Cod 200.
-               send(socket, "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nKeep-Alive: timeout=5\r\nConnection: keep-alive\r\n\r\n", 101, 0);
-
                //Agora vamos alocar o quantidade de bytes do arquivo na variavel buffer
                //para poder enviar ao socket.
                buffer = (char *) malloc(bytes_no_arquivo * sizeof(char));
@@ -155,10 +159,26 @@ void * buscador_arquivos(void * reqv){
 
                //Aqui vamos de fato ler o arquivo html para armazenar no buffer   
                fread(buffer, bytes_no_arquivo, 1, file);
+               char tamanho_string[10];
+               sprintf(tamanho_string,"%ld",bytes_no_arquivo);
+
+               printf("\nTamanho em bytes: %s", tamanho_string);
+               printf("\ntamanho real: %d",sprintf(tamanho_string,"%ld",bytes_no_arquivo));
+
+               char *msg_html = (char *) malloc(strlen("HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nContent-Length:")+sprintf(tamanho_string,"%ld",bytes_no_arquivo)+strlen("\r\nConnection:keep-alive\r\n\r\n"));
+               
+               strcpy(msg_html,"HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nContent-Length:");
+               strcat(msg_html,tamanho_string);
+               strcat(msg_html,"\r\nConnection:keep-alive\r\n\r\n");
+               printf("\nteste de mensagem com tamanho: \n%s",msg_html);
+               //Envia ao navegador uma resposta de sucesso, indicando que a busca pelo item foi
+               //bem sucedida. Cod 200.
+               send(socket,msg_html , strlen(msg_html), 0);
+
                //Agora que temos a informação no buffer, vamos escreve-la no socket
                write(socket, buffer, bytes_no_arquivo);
 
-               free(buffer);
+               
                fclose(file);
 
             } else {
@@ -169,6 +189,17 @@ void * buscador_arquivos(void * reqv){
 
          //Tratamento de imagens para enviar ao servidor
          } else if((strcmp(tokens[1], "jpg") == 0) || (strcmp(tokens[1], "jpeg") == 0) || (strcmp(tokens[1], "png"))){
+            
+            char tamanho_string_img[10];
+            file_img_size = fopen(caminho_total, "r");
+            fseek(file_img_size, 0, SEEK_END);
+
+               //Armazena a quantidade de bytes do arquivo na variavel
+            bytes_na_imagem =(int) ftell(file);
+            fseek(file_img_size, 0, SEEK_SET);
+            sprintf(tamanho_string_img,"%d",bytes_na_imagem);
+
+            fclose(file_img_size);
 
             file_img = open(caminho_total, O_RDONLY);
 
@@ -177,14 +208,19 @@ void * buscador_arquivos(void * reqv){
                printf("\nArquivo encontrado!\n");
 
                //Informando que a requisição foi estabelecida com sucesso
-               //Muito importante dar atenção ao tipo de resposta, exemplo: image/jpeg, senão o navegador não sabe interpretar o tipo de arquivo
+               
+               
 
-               char *msg = (char * ) malloc(sizeof(char)* (strlen("HTTP/1.1 200 OK\r\nContent-Type: image/jpeg\r\n")+strlen("Keep-Alive: timeout=5\r\nConnection: keep-alive\r\n")));
+               
+               //Muito importante dar atenção ao tipo de resposta, exemplo: image/jpeg, senão o navegador não sabe interpretar o tipo de arquivo
+               //Modificar isso aqui depois para receber png tbm
+               char *msg = (char * ) malloc(sizeof(char)* (strlen("HTTP/1.1 200 OK\r\nContent-Type: image/jpeg\r\nContent-Length:")+sprintf(tamanho_string_img,"%d",bytes_na_imagem)+strlen("\r\nConnection: keep-alive\r\n\r\n")));
 
                msg[0] = '\0';
 
-               strcat(msg,"HTTP/1.1 200 OK\r\nContent-Type: image/jpeg\r\n");
-               strcat(msg,"Keep-Alive: timeout=5\r\nConnection: keep-alive\r\n");
+               strcat(msg,"HTTP/1.1 200 OK\r\nContent-Type: image/jpeg\r\nContent-Length:");
+               strcat(msg,tamanho_string_img);
+               strcat(msg,"\r\nConnection: keep-alive\r\n\r\n");
 
 
                printf("\nMesagem enviada ao cliente %s\nTamanho total: %ld\n", msg, strlen(msg));
