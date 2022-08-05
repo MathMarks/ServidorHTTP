@@ -5,12 +5,15 @@
 #include "HTTPRequest.h"
 #include <string.h>
 #include "C_fila.h"
+#include "unistd.h"
 
 node_c * ini_cliente = NULL;
 node_c * fim_cliente = NULL;
 
 node_r * ini_request = NULL;
 node_r * fim_request = NULL;
+
+int tamanho_fila_request = 0;
 
 pthread_mutex_t mutex_request = PTHREAD_MUTEX_INITIALIZER;
 
@@ -92,6 +95,8 @@ void insere_fila_request(int *socket, char * buffer){
     }
 
     fim_request = novo_no;
+    tamanho_fila_request++;
+    printf("\nInseriu fila request, tamanho atual: %d", tamanho_fila_request);
     pthread_mutex_unlock(&mutex_request);
 }
 
@@ -110,11 +115,13 @@ requestInfo * retira_fila_request(){
         if(ini_request == NULL) fim_request = NULL;
 
         free(aux);
-
+        tamanho_fila_request--;
+        printf("\nRetirou fila request, tamanho atual: %d", tamanho_fila_request);
         return prox_request;
 
     }
-
+    tamanho_fila_request--;
+    printf("\nRetirou fila request, tamanho atual: %d", tamanho_fila_request);
     return NULL;
 
 }
@@ -123,7 +130,7 @@ void * manipula_fila_request(void * arg){
 
    while (1)
    {
-
+    
       pthread_mutex_lock(&mutex_request);
       requestInfo* req =  retira_fila_request();
       pthread_mutex_unlock(&mutex_request);

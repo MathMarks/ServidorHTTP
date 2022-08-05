@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sat Jul 30 14:05:32 2022
+# Make data base, printed on Fri Aug  5 13:11:24 2022
 
 # Variables
 
@@ -45,7 +45,7 @@ XDG_DATA_DIRS = /usr/share/plasma:/usr/share/gnome:/home/matheus/.local/share/fl
 # automatic
 %F = $(notdir $%)
 # environment
-VSCODE_CODE_CACHE_PATH = /home/matheus/.config/Code/CachedData/3b889b090b5ad5793f524b5d1d39fda662b96a2a
+VSCODE_CODE_CACHE_PATH = /home/matheus/.config/Code/CachedData/da76f93349a72022ca4670c1b84860304616aaa2
 # environment
 XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session1
 # environment
@@ -61,7 +61,7 @@ MAKEFLAGS = pqrR
 # makefile
 CURDIR := /home/matheus/Documents/Faculdade/Redes/TrabalhoPratico/ServidorHTTP
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # environment
 LESSOPEN = | /usr/bin/lesspipe %s
 # automatic
@@ -71,7 +71,7 @@ PAM_KWALLET5_LOGIN = /run/user/1000/kwallet5.socket
 # environment
 MFLAGS = -pqrR
 # environment
-SSH_AUTH_SOCK = /tmp/ssh-XXXXXXv3o1k5/agent.1399
+SSH_AUTH_SOCK = /tmp/ssh-XXXXXX03gqJ5/agent.1872
 # default
 .SHELLFLAGS := -c
 # environment
@@ -79,7 +79,7 @@ XDG_CONFIG_DIRS = /home/matheus/.config/kdedefaults:/etc/xdg/xdg-plasma:/etc/xdg
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # environment
-XCURSOR_THEME = breeze_cursors
+XCURSOR_THEME = Oxygen_Yellow
 # environment
 XDG_SESSION_DESKTOP = KDE
 # makefile (from 'Makefile', line 1)
@@ -87,13 +87,13 @@ MAKEFILE_LIST := Makefile
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 12419
+VSCODE_PID = 33134
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/matheus-dell:@/tmp/.ICE-unix/1765,unix/matheus-dell:/tmp/.ICE-unix/1765
+SESSION_MANAGER = local/matheus-dell:@/tmp/.ICE-unix/2253,unix/matheus-dell:/tmp/.ICE-unix/2253
 # automatic
 *F = $(notdir $*)
 # environment
@@ -157,7 +157,7 @@ XDG_VTNR = 1
 # makefile
 .DEFAULT_GOAL := all
 # environment
-SYSTEMD_EXEC_PID = 1370
+SYSTEMD_EXEC_PID = 1832
 # environment
 DISPLAY = :0
 # environment
@@ -169,7 +169,7 @@ KDE_SESSION_UID = 1000
 # environment
 LC_MEASUREMENT = pt_BR.UTF-8
 # environment
-SSH_AGENT_PID = 1534
+SSH_AGENT_PID = 2017
 # environment
 _ = /usr/share/code/code
 # environment
@@ -191,9 +191,9 @@ HOME = /home/matheus
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-VSCODE_IPC_HOOK = /run/user/1000/vscode-b26710e1-1.69.2-main.sock
+VSCODE_IPC_HOOK = /run/user/1000/vscode-b26710e1-1.70.0-main.sock
 # environment
-XDG_SESSION_ID = 3
+XDG_SESSION_ID = 19
 # environment
 XCURSOR_SIZE = 24
 # environment
@@ -223,9 +223,9 @@ LC_IDENTIFICATION = pt_BR.UTF-8
 
 # Directories
 
-# . (device 2050, inode 4459511): 33 files, no impossibilities.
+# . (device 2050, inode 4459511): 28 files, no impossibilities.
 
-# 33 files, no impossibilities in 1 directories.
+# 28 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -264,14 +264,14 @@ clean:
 # Not a target:
 Servidor.h:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-26 20:19:09.855187711
+#  Last modified 2022-08-02 20:49:11.092187661
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 C_fila.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-28 11:21:42.503148931
+#  Last modified 2022-08-04 13:31:39.1844572
 #  File has been updated.
 #  Successfully updated.
 
@@ -279,6 +279,7 @@ C_fila.c:
 HTTPRequest.h:
 #  Implicit rule search has been done.
 #  Last modified 2022-07-29 19:20:44.756147926
+ 
 #  File has been updated.
 #  Successfully updated.
 
@@ -287,7 +288,6 @@ HTTPRequest.h:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
- 
 
 all: run
 #  Command line target.
@@ -300,48 +300,31 @@ all: run
 
 run: main.o C_fila.o Servidor.o HTTPRequest.o
 #  Implicit rule search has not been done.
-#  Implicit/static pattern stem: ''
 #  File does not exist.
 #  File has been updated.
 #  Needs to be updated (-q is set).
-# automatic
-# @ := run
-# automatic
-# * := 
-# automatic
-# < := main.o
-# automatic
-# + := main.o C_fila.o Servidor.o HTTPRequest.o
-# automatic
-# % := 
-# automatic
-# ^ := main.o C_fila.o Servidor.o HTTPRequest.o
-# automatic
-# ? := main.o C_fila.o Servidor.o HTTPRequest.o
-# automatic
-# | := 
 # variable set hash-table stats:
-# Load=8/32=25%, Rehash=0, Collisions=1/11=9%
+# Load=0/32=0%, Rehash=0, Collisions=0/3=0%
 #  recipe to execute (from 'Makefile', line 5):
 	gcc -o http main.o C_fila.o Servidor.o HTTPRequest.o
 
 # Not a target:
 HTTPRequest.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-29 19:20:46.552102742
+#  Last modified 2022-08-05 00:28:08.688842643
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 main.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-29 20:47:49.139431245
+#  Last modified 2022-08-04 13:16:33.618214
 #  File has been updated.
 #  Successfully updated.
 
 main.o: main.c C_fila.h Servidor.h HTTPRequest.h
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-29 20:48:04.935442575
+#  Last modified 2022-08-04 13:24:24.998803948
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 8):
@@ -349,15 +332,34 @@ main.o: main.c C_fila.h Servidor.h HTTPRequest.h
 
 HTTPRequest.o: HTTPRequest.c HTTPRequest.h
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-29 19:52:57.130500318
+#  Implicit/static pattern stem: ''
+#  Last modified 2022-08-04 23:53:56.79325688
 #  File has been updated.
-#  Successfully updated.
+#  Needs to be updated (-q is set).
+# automatic
+# @ := HTTPRequest.o
+# automatic
+# * := 
+# automatic
+# < := HTTPRequest.c
+# automatic
+# + := HTTPRequest.c HTTPRequest.h
+# automatic
+# % := 
+# automatic
+# ^ := HTTPRequest.c HTTPRequest.h
+# automatic
+# ? := HTTPRequest.c
+# automatic
+# | := 
+# variable set hash-table stats:
+# Load=8/32=25%, Rehash=0, Collisions=1/11=9%
 #  recipe to execute (from 'Makefile', line 17):
 	gcc -o HTTPRequest.o HTTPRequest.c -c -W -Wall  -pedantic
 
 C_fila.o: C_fila.c C_fila.h
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-28 12:09:45.874346076
+#  Last modified 2022-08-04 23:21:14.636830551
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 11):
@@ -365,7 +367,7 @@ C_fila.o: C_fila.c C_fila.h
 
 Servidor.o: Servidor.c Servidor.h
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-29 21:10:49.33142356
+#  Last modified 2022-08-02 20:49:16.740140348
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 14):
@@ -385,12 +387,12 @@ Servidor.o: Servidor.c Servidor.h
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 40 / storage = 368 B / avg = 9 B
-# current buf: size = 8162 B / used = 368 B / count = 40 / avg = 9 B
+# strcache buffers: 1 (0) / strings = 35 / storage = 327 B / avg = 9 B
+# current buf: size = 8162 B / used = 327 B / count = 35 / avg = 9 B
 
-# strcache performance: lookups = 72 / hit rate = 44%
+# strcache performance: lookups = 67 / hit rate = 47%
 # hash-table stats:
-# Load=40/8192=0%, Rehash=0, Collisions=0/72=0%
-# Finished Make data base on Sat Jul 30 14:05:32 2022
+# Load=35/8192=0%, Rehash=0, Collisions=0/67=0%
+# Finished Make data base on Fri Aug  5 13:11:24 2022
 
  

@@ -18,7 +18,6 @@ pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
 
 void * manipula_pool_threads(void * arg){
-
     while(1){
 
         pthread_mutex_lock(&mutex);
@@ -53,8 +52,12 @@ void iniciar(struct Servidor *servidor){
 
         int *pcliente = (int*) malloc(sizeof(int));
         *pcliente = novo_socket;
-
-        //printf("\n-Socket:: %d:::::\n", *pcliente);
+        printf("\n-----------------------------------------------------------------------------------------");
+        printf("\nNovo cliente conectado");
+        printf("\nSocket Utilizado: %d", *pcliente);
+        printf("\nIP do Cliente   : %s", inet_ntoa(servidor->endereco.sin_addr));
+        printf("\nPorta utilizada : %d", ntohs(servidor->endereco.sin_port));
+        //sleep(100);
         pthread_mutex_lock(&mutex);
         insere_fila_cliente(pcliente, inet_ntoa(servidor->endereco.sin_addr), ntohs(servidor->endereco.sin_port));
         pthread_mutex_unlock(&mutex);
@@ -64,7 +67,7 @@ void iniciar(struct Servidor *servidor){
         
         //write(novo_socket, teste, strlen(teste));
         //printf("\n______________________________FINALIZOU REQUISIÇÃO________________________________\n");
-        sleep(3);
+        
     }
 }
 
