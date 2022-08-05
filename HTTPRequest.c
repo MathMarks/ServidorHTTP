@@ -43,21 +43,22 @@ void * request_handler(void * c_socket){
    char *infos_da_requisicao[4];
    int count = 0;
    
+   //recv retorna o número de bytes que foi enviado pelo cliente e escreve a mensagem enviada
+   //no buffer, quando a quantidade de bytes enviada pelo cliente for <= 0, o loop se encerra
+   //o cliente não está mais enviando requisições
    while(recv(socket, buffer, BUFFER_SIZE,0) > 0){ 
+
       //printf("\n------Dentro do request_handler----\nRequest n°%d\n", count+1); 
       //read(socket, buffer, BUFFER_SIZE);
       //printf("\nInicio Requisição Cliente\n");
-      printf("%s\n", buffer);
+
+      //printf("%s\n", buffer);
       //printf("\nFinal Requisição Cliente\n");
 
       //Extrair o nome do arquivo requisitado pelo cliente de dentro da variável buffer.
-      
-
-      //printf("%s\n", request); //Imprime toda a requisição do cliente e informações sobre ele
-
       //Captura o metodo, que sempre será o GET no caso dessa implementação
       infos_da_requisicao[0] = strtok(buffer, " \t\n");
-      //Captura o arquivo que o cliente está solicitando, html ou jpg até o momento
+      //Captura o arquivo que o cliente está solicitando, html ou jpg 
       infos_da_requisicao[1] = strtok(NULL, " \t");
       //captura a versão do HTTP em uso
       infos_da_requisicao[2] = strtok(NULL, " \t\n");
@@ -73,8 +74,9 @@ void * request_handler(void * c_socket){
       printf("\nArquivo da requisição  : %s", infos_da_requisicao[1]);
       printf("\nCliente                : %s", infos_da_requisicao[3]);
 
+      //Verificação extra para garantir que o cliente realmente enviou uma busca, e não somente um GET e nada mais.
       if (strlen(infos_da_requisicao[1])>0){
-         //printf("\nDevolvendo Arquivo! Requisição: %s Arquivo: %s\n", infos_da_requisicao[0],infos_da_requisicao[1]);
+
          insere_fila_request(&socket, infos_da_requisicao[1]);
          //printf("\nInseriu Fila\n");
          //pthread_create(&thread, NULL, buscador_arquivos, cria_request(infos_da_requisicao[1], &socket));
@@ -87,7 +89,6 @@ void * request_handler(void * c_socket){
       //printf("\n--Saiu Request Handler--\n");
       //sclose(socket);
    close(socket);
-   //free(socket);
 return NULL;
 } 
 
@@ -176,7 +177,8 @@ void * buscador_arquivos(void * reqv){
 
                //printf("\nTempo m ini: %ld",tmp_ini.tv_usec);
                //printf("\nTempo m final: %ld",tmp_final.tv_usec);
-               printf("\nTempo RTT: %ldms",(tmp_final.tv_usec - tmp_ini.tv_usec)*2);
+               
+               printf("\nTempo RTT: %ldms",(tmp_final.tv_usec - tmp_ini.tv_usec));
                      
                fclose(file);
 
@@ -235,7 +237,7 @@ void * buscador_arquivos(void * reqv){
                   gettimeofday(&tmp_ini, NULL);
                   write(socket, buffer_imagem, bytes_na_imagem);
                   gettimeofday(&tmp_final, NULL);
-                  printf("\nTempo RTT: %ldms para a %d° parte da imagem, Tamanho: %d",(tmp_final.tv_usec - tmp_ini.tv_usec)*2, i, bytes_na_imagem);
+                  printf("\nTempo RTT: %ldms para a %d° parte da imagem, Tamanho: %d",(tmp_final.tv_usec - tmp_ini.tv_usec), i, bytes_na_imagem);
 
                }
                

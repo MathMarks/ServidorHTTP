@@ -77,11 +77,11 @@ int main() {
     printf("\nServidor HTTP\n");
     printf("\nTrabalho realizado por:\nMatheus Marques\nGiuliana Leon\nThamires Sampaio\n");
     printf("-----------------------------------------------------------------------------\n");
-    //Com isso temos uma estrutura de servidor funcionando, agora iniciar a parsing de mensagens.
+    
     sleep(4);
     printf("\nIniciando instanciamento das threads para lidar com clientes\n");
     for(int i = 0; i < THREAD_POOL_SIZE; i++){
-        
+        //Realiza o instanciamento das threads responsáveis por lidar com os clientes
         if((pthread_create(&threads_cliente[i], NULL, manipula_pool_threads, NULL)) != 0){
 
             printf("Erro ao instanciar thread n° %d\n",i+1);
@@ -98,6 +98,7 @@ int main() {
     
     printf("Instanciando Thread para lidar com fila de requests\n");
     sleep(2);
+    //Realiza a instanciação da thread responsável por lidar com a fila de requests
     pthread_create(&threads_request, NULL, manipula_fila_request, NULL);
 
     printf("Thread para lidar com requests instanciada com sucesso\n");
@@ -110,7 +111,7 @@ int main() {
     //INADDR_ANY - Esse parâmetro especifica que estamos escutando por qualquer tipo de endereço ip
     //PORT_NUMBER - Porta escolhida
     //10 Backlog
-    //iniciar - função inicar teste 
+    //Com isso temos uma estrutura de servidor funcionando, agora iniciar a parsing de mensagens.
     struct Servidor servidor = construtor_servidor(AF_INET, SOCK_STREAM, 0, INADDR_ANY, PORT_NUMBER, 10, iniciar);
   
     servidor.iniciar(&servidor);
